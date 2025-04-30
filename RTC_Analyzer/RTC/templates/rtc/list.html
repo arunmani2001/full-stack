@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RTC List</title>
+    <link rel="stylesheet" href="/static/rtc/style.css">
+</head>
+
+<body>
+    <h1>RTC Records</h1>
+    <table border="1">
+        <tr>
+            <th>Year</th>
+            <th>Owner</th>
+            <th>Document</th>
+        </tr>
+        {% for rtc in rtcs %}
+        <tr>
+            <td>{{ rtc.year }}</td>
+            <td>{{ rtc.owner_name }}</td>
+            <td><a href="{{ rtc.document.url }}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/fetch/">Fetch Missing RTCs</a>
+</body>
+
+</html>
