@@ -1,0 +1,134 @@
+{% load static %}
+ 
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RTC List</title>
+    <link rel="stylesheet" href="../static/css/list.css">
+</head>
+
+<body>
+    <div class="head">
+        <h1>TitleWize online | Land Records | View </h1>
+        <h3>Records of Rights,Tenancy & Crops(RTC) Form 16 | Mutation Register | Mutation Status</h3>
+    </div>
+    <div class="TOP">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-btn">Current Year</a></li>
+                <li><a href="#" class="nav-btn">Old Year</a></li>
+                <li><a href="#" class="nav-btn">MR</a></li>
+                <li><a href="#" class="nav-btn">Mutation Status</a></li>
+                <li><a href="#" class="nav-btn">Kahata Extract</a></li>
+                <li><a href="#" class="nav-btn">Survey Document</a></li>
+                <li><a href="#" class="nav-btn">Akarband</a></li>
+                <li><a href="#" class="nav-btn">RTC with sketch[beta]</a></li>
+                <li><a href="#" class="nav-btn">EChavadi</a></li>
+                <li><a href="#" class="nav-btn">Surwey Sketch</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="weblink">
+        <button><a href="https://rtc.karnataka.gov.in/service78/">https://rtc.karnataka.gov.in/service78/</a></button>
+    </div>
+
+
+    <div class="form">
+        <h3>Select Survey Number</h3>
+        {% block content %}
+        <form action="addData" method="POST" autocomplete="off">
+            <!-- CSRF token if using with Django -->
+            {% csrf_token %}
+            <label for="district">District:</label>
+            <select id="district" name="district" required>
+                <option value="">--Select District--</option>
+                <option value="bangalore_rural">Bangalore Rural</option>
+                <!-- Add more districts -->
+            </select>
+
+            <label for="taluk">Taluk:</label>
+            <select id="taluk" name="taluk" required>
+                <option value="">--Select Taluk--</option>
+                <option value="devanahalli">Devanahalli</option>
+                <!-- Add more taluks -->
+            </select>
+
+            <label for="hobli">Hobli:</label>
+            <select id="hobli" name="hobli" required>
+                <option value="">--Select Hobli--</option>
+                <option value="kasaba">Kasaba</option>
+                <!-- Add more hoblis -->
+            </select>
+
+            <label for="village">Village:</label>
+            <select id="village" name="village" required>
+                <option value="">--Select Village--</option>
+                <option value="devanahalli">Devanahalli</option>
+                <!-- Add more villages as needed -->
+            </select>
+
+            <label for="survey_number">Survey Number:</label>
+            <input type="number" id="survey_number" name="survey_number" required>
+
+            <label for="surnoc">Surnoc:</label>
+            <select id="surnoc" name="surnoc" required>
+                <option value="">--surnoc--</option>
+                <option value="surnoc"> * </option>
+            </select>
+
+            <label for="hissa">Hissa:</label>
+            <input type="number" id="hissa" name="hissa">
+
+            <label for="year">Year</label>
+            <input type="text" name="year" placeholder="e.g. 2015-16" required>
+
+            <label for="owner_name">Owner Name</label>
+            <input  type="text" name="owner_name" required></input>
+        
+            <label for="document">Upload RTC Document</label>
+            <input type="file" name="document" required>
+        
+            <!-- <label for="period">Period (Date)</label>
+            <input type="datetime-local" name="period" required> -->
+            
+            <label for="extracted">extracted</label>
+            <select id="extracted" name="extracted" required>
+                <option value="">--Select T or F--</option>
+                <option value="True">True</option>
+                <option value="False">False</option>
+            </select>
+        
+
+            <button type="submit">Submit</button>
+        </form>
+        {% endblock %}
+    </div>
+
+
+    <div class="ownerdetails">
+        {% if datas %}
+        <h1>Owner Details</h1>
+        {% for data in datas %}
+            <h4>ownername  : {{data.owner_name}}</h4>
+            <h4>extract : {{data.extracted}}</h4>
+        
+    </div>
+
+    <div class="details">
+
+        <h4>village : {{data.village}}</h4>
+        <h4>surveynumber : {{data.survey_number}}</h4>
+        <h4>surnoc : {{data.surnoc}}</h4>
+        <h4>hissa : {{data.hissa}}</h4>
+        <!-- <h4>{{data.period}}</h4> -->
+        <h4>year : {{data.year}}</h4>
+
+        <h4>Document: <a href="{{ data.document.url }}">View Document</a></h4>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+</html>
